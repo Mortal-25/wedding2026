@@ -10,11 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     <style>
-        /* ГЛОБАЛЬНЫЕ НАСТРОЙКИ СТИЛЯ ИЗ МАКЕТОВ */
         :root {
-            --bg-color: #FDFBF7;       /* Кремовый фон из макетов сестры */
-            --text-main: #3D2B1F;      /* Насыщенный шоколадный текст */
-            --accent-gold: #C5A059;   /* Матовое благородное золото */
+            --bg-color: #FDFBF7; /* Благородний молочно-кремовий фон карточок */
+            --text-main: #3D2B1F; /* Глубокий шоколадно-коричневый для текста */
+            --accent-gold: #C5A059; /* Матовое золото для элементов декора */
             --light-gold: rgba(197, 160, 89, 0.3);
             --font-serif: 'Playfair Display', serif;
             --font-body: 'Lora', serif;
@@ -24,76 +23,107 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth; /* Плавный скролл к блокам по кнопкам */
         }
 
-        body {
-            background-color: #EFEBE4; /* Внешний фон (за пределами экрана телефона) */
-            color: var(--text-main);
+        /* НАЛАШТУВАННЯ ДЛЯ ПОСТОРІНКОВОГО С КРОЛУ (SCROLL-SNAP) */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #EFEBE4;
+            scroll-snap-type: y mandatory; /* Включає жорстку фіксацію екранів */
+            overflow-y: scroll;
+            scroll-behavior: smooth;
             font-family: var(--font-body);
+            color: var(--text-main);
             line-height: 1.6;
         }
 
-        /* КОНТЕЙНЕР СМАРТФОНА (Сайт оптимизирован под экраны мобильных устройств) */
-        .wrapper {
-            max-width: 480px;
-            margin: 0 auto;
-            background-color: var(--bg-color);
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(90, 75, 65, 0.15);
+        /* КОНТЕЙНЕР ДЛЯ СЛАЙДІВ */
+        .slide-section {
+            width: 100%;
+            height: 100vh; /* Рівно 100% висоти поточного екрану */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start; /* Точка фіксації слайду */
             position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
-        section {
-            padding: 55px 30px;
+        /* Центрувальник контенту всередині слайду (імітація екрану телефону) */
+        .slide-content {
+            width: 100%;
+            max-width: 450px;
+            height: 100%;
+            background-color: var(--bg-color);
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             position: relative;
+            box-shadow: 0 0 30px rgba(90, 75, 65, 0.05);
+        }
+
+        /* Для великих блоків, які не влазять на маленький екран (наприклад, RSVP) */
+        .slide-content.scrollable {
+            justify-content: flex-start;
+            overflow-y: auto;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
 
         h2 {
             font-family: var(--font-serif);
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: var(--text-main);
+            margin-bottom: 5px;
         }
 
-        /* Элегантные разделители с ромбиком/сердечком из дизайна сестры */
+        /* Роздільники з оригінального макету */
         .heart-divider {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 15px 0 25px 0;
+            margin: 15px 0 20px 0;
+            width: 100%;
         }
         .heart-divider::before, .heart-divider::after {
             content: '';
-            width: 45px;
+            width: 50px;
             height: 1px;
             background-color: var(--light-gold);
         }
         .heart-divider span {
             color: var(--accent-gold);
-            font-size: 11px;
+            font-size: 10px;
             margin: 0 10px;
         }
 
         .branch-decor {
             color: var(--accent-gold);
             font-size: 20px;
-            margin-top: 25px;
+            margin-top: 15px;
+            letter-spacing: 2px;
         }
 
         /* 1. ОБЛОЖКА */
         .hero {
-            padding: 80px 35px 50px 35px;
-            margin: 20px;
-            background: #ffffff;
+            padding: 50px 30px;
             border: 1px solid var(--light-gold);
+            background: #fff;
+            width: 100%;
         }
         .hero-names {
             font-family: var(--font-serif);
-            font-size: 44px;
+            font-size: 42px;
             font-weight: 400;
             line-height: 1.2;
             margin: 15px 0;
@@ -117,51 +147,41 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
-        /* ИНТЕРАКТИВНЫЕ КНОПКИ ДЕЙСТВИЯ */
-        .btn-action {
+        /* Навігаційні кнопки */
+        .btn-nav {
             display: inline-block;
-            padding: 12px 24px;
-            background-color: transparent;
+            padding: 10px 20px;
             border: 1px solid var(--text-main);
             color: var(--text-main);
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin: 10px 5px;
-            transition: all 0.3s ease;
             font-weight: 600;
-            cursor: pointer;
+            transition: all 0.3s;
         }
-        .btn-action:hover {
+        .btn-nav:hover {
             background-color: var(--text-main);
-            color: #ffffff;
-        }
-        .btn-primary {
-            background-color: var(--text-main);
-            color: #ffffff;
-        }
-        .btn-primary:hover {
-            background-color: var(--accent-gold);
-            border-color: var(--accent-gold);
+            color: #fff;
         }
 
-        /* 2. ИНТЕРАКТИВНЫЙ ТАЙМЕР ОБРАТНОГО ОТСЧЕТА */
+        /* 2. ТАЙМЕР */
         .timer-container {
             background-color: #ffffff;
             border: 1px solid var(--light-gold);
-            padding: 25px 15px;
-            margin: 20px auto;
-            max-width: 100%;
+            padding: 20px 15px;
+            margin: 20px 0;
+            width: 100%;
         }
         .timer-title {
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #7A6B62;
         }
         .timer-display {
@@ -174,49 +194,45 @@
         }
         .timer-val {
             font-family: var(--font-serif);
-            font-size: 32px;
-            font-weight: 400;
+            font-size: 28px;
             color: var(--text-main);
             display: block;
             line-height: 1;
             margin-bottom: 5px;
         }
         .timer-lbl {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--accent-gold);
-            text-transform: lowercase;
         }
 
-        /* 3. ИМЕННОЕ ПРИВЕТСТВИЕ */
+        /* 3. ПРИВЕТСТВИЕ */
         .greeting-title {
             font-size: 14px;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--accent-gold);
         }
         .guest-name {
             font-family: var(--font-serif);
-            font-size: 34px;
+            font-size: 32px;
             font-style: italic;
-            color: var(--text-main);
+            color: var(--accent-gold);
             font-weight: 400;
-            margin: 10px 0 20px 0;
+            margin: 10px 0 15px 0;
         }
 
-        /* 4. АРКА С ФОТО МОЛОДОЖЕНОВ */
-        .photo-section { background-color: #ffffff; }
+        /* 4. АРКА ДЛЯ ДЕТСКОГО ФОТО */
         .arch-frame {
-            width: 240px;
-            height: 340px;
-            margin: 0 auto 25px auto;
+            width: 210px;
+            height: 300px;
+            margin: 0 auto 15px auto;
             border: 1px solid var(--accent-gold);
-            border-radius: 120px 120px 0 0;
+            border-radius: 105px 105px 0 0;
             padding: 6px;
         }
         .arch-inside {
             width: 100%;
             height: 100%;
-            border-radius: 114px 114px 0 0;
+            border-radius: 99px 99px 0 0;
             overflow: hidden;
             background-color: #EFEBE4;
         }
@@ -226,15 +242,13 @@
             object-fit: cover;
         }
 
-        /* 5. ТАЙМЛАЙН ПРОГРАММЫ */
+        /* 5. ТАЙМЛАЙН */
         .timeline-container {
-            margin-top: 30px;
+            margin-top: 15px;
             position: relative;
             text-align: left;
-            padding-left: 40px;
-            max-width: 320px;
-            margin-left: auto;
-            margin-right: auto;
+            padding-left: 35px;
+            display: inline-block;
         }
         .timeline-container::before {
             content: '';
@@ -247,146 +261,118 @@
         }
         .timeline-row {
             position: relative;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
         }
         .timeline-row::before {
             content: '';
             position: absolute;
-            left: -28px;
+            left: -24px;
             top: 7px;
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             background-color: var(--accent-gold);
             border-radius: 50%;
         }
         .time {
             font-family: var(--font-serif);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-main);
             margin-right: 15px;
             display: inline-block;
-            width: 50px;
+            width: 45px;
         }
         .event-title {
-            font-size: 15px;
+            font-size: 14px;
             display: inline-block;
             vertical-align: top;
         }
 
-        /* 6. ДРЕСС-КОД И ПАЛИТРА */
-        .dress-code-section { background-color: #ffffff; }
+        /* 6. ДРЕСС-КОД */
         .palette-grid {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin: 25px 0;
+            margin: 20px 0;
         }
         .color-ball {
             text-align: center;
-            font-size: 10px;
+            font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #8C7E74;
-            width: 70px;
+            width: 65px;
         }
         .color-preview {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             margin: 0 auto 6px auto;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
             border: 1px solid rgba(0,0,0,0.04);
         }
 
-        /* 7. ЖИВАЯ АНКЕТА RSVP */
-        .rsvp-section {
-            border-top: 1px solid var(--light-gold);
-            background-color: #ffffff;
-        }
-        .rsvp-box {
-            text-align: left;
-            max-width: 380px;
-            margin: 0 auto;
-            padding: 20px 10px;
-        }
-        .form-item { margin-bottom: 22px; }
+        /* 7. ФОРМА RSVP */
+        form { text-align: left; width: 100%; margin-top: 10px; }
+        .form-item { margin-bottom: 15px; }
         label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
         input[type="text"], select {
             width: 100%;
-            padding: 14px;
+            padding: 11px 12px;
             border: 1px solid #DCD7CE;
             background-color: #FCFAF7;
             color: var(--text-main);
             font-family: var(--font-body);
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
-        }
-        input[type="text"]:focus, select:focus {
-            border-color: var(--accent-gold);
-            background-color: #fff;
         }
         .radio-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 5px;
+            gap: 8px;
         }
         .radio-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
         }
-        input[type="radio"], input[type="checkbox"] {
-            accent-color: var(--text-main);
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        
-        /* Плавная анимация раскрытия имени спутника (+1) */
         .hidden-input-block {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
         }
         .hidden-input-block.open {
-            max-height: 110px;
+            max-height: 90px;
             opacity: 1;
-            margin-top: 15px;
+            margin-top: 10px;
         }
-
         .submit-button {
             background-color: var(--text-main);
-            color: #ffffff;
+            color: #fff;
             border: none;
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             font-family: var(--font-body);
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 15px;
             font-weight: 600;
         }
-        .submit-button:hover { background-color: var(--accent-gold); }
-        
         .status-message {
-            padding: 20px;
-            margin-top: 15px;
+            padding: 12px;
+            margin-top: 10px;
             display: none;
             text-align: center;
             font-weight: 600;
@@ -394,20 +380,24 @@
             border: 1px dashed var(--accent-gold);
         }
 
-        /* 8. ЛОКАЦИЯ */
+        /* 8. КАРТА */
         .map-box {
             width: 100%;
-            height: 250px;
+            height: 220px;
             border: 1px solid var(--light-gold);
-            margin-top: 20px;
+            margin-top: 15px;
+        }
+        .map-box iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-
-        <section style="padding-bottom: 20px;">
+    <div class="slide-section" id="slide-hero">
+        <div class="slide-content">
             <div class="hero">
                 <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 11px; color: var(--accent-gold);">Запрошення</p>
                 <h1 class="hero-names">Дар'я<span>&</span>Антон</h1>
@@ -416,15 +406,15 @@
                 <br>
                 <div class="hero-badge">Запрошення на весілля</div>
             </div>
-            
-            <div style="margin-top: 15px;">
-                <a href="#rsvp-section" class="btn-action btn-primary">Заповнити RSVP</a>
-                <a href="#timeline-section" class="btn-action">Програма</a>
+            <div style="margin-top: 10px;">
+                <a href="#slide-rsvp" class="btn-nav">Заповнити RSVP</a>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <section style="padding-top: 10px;">
-            <p style="font-style: italic; max-width: 380px; margin: 0 auto; color: #5A4B41;">
+    <div class="slide-section">
+        <div class="slide-content">
+            <p style="font-size: 15px; font-style: italic; color: #5A4B41; padding: 0 10px;">
                 «У кожної історії є особлива глава. Наша починається тут. Дякую, що будете поруч із нами у цей особливий день!»
             </p>
             
@@ -450,44 +440,52 @@
                 </div>
             </div>
             <div class="branch-decor">🍃</div>
-        </section>
+        </div>
+    </div>
 
-        <section style="padding-top: 20px;">
+    <div class="slide-section">
+        <div class="slide-content">
             <p class="greeting-title">Шановні</p>
             <h1 id="web-guest-name" class="guest-name">Друзі</h1>
-            <p style="font-size: 15px; padding: 0 10px;">запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя ✨</p>
+            <p style="font-size: 14px; padding: 0 15px;">запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя ✨</p>
             <div class="branch-decor">🍃</div>
-        </section>
+        </div>
+    </div>
 
-        <section class="photo-section">
+    <div class="slide-section">
+        <div class="slide-content">
             <div class="heart-divider"><span>♥</span></div>
             <div class="arch-frame">
                 <div class="arch-inside">
-                    <img src="1117.jpg" alt="Молодята">
+                    <img src="1117.jpg" alt="Молодята в дитинстві">
                 </div>
             </div>
-            <p style="font-size: 15px; font-style: italic; color: #6E5F55;">«І серед мільйонів людей ми знайшли одне одного...»</p>
-        </section>
+            <p style="font-size: 14px; font-style: italic; color: #6E5F55;">«І серед мільйонів людей ми знайшли одне одного...»</p>
+        </div>
+    </div>
 
-        <section id="timeline-section">
+    <div class="slide-section">
+        <div class="slide-content">
             <h2>Timeline</h2>
             <div class="heart-divider"><span>♥</span></div>
             
             <div class="timeline-container">
                 <div class="timeline-row"><span class="time">14:00</span><span class="event-title">Welcome zone</span></div>
                 <div class="timeline-row"><span class="time">14:30</span><span class="event-title">Церемонія</span></div>
-                <div class="timeline-row"><span class="time">15:30</span><span class="event-title">1 стіл (Банкет)</span></div>
+                <div class="timeline-row"><span class="time">15:30</span><span class="event-title">1 стіл</span></div>
                 <div class="timeline-row"><span class="time">17:30</span><span class="event-title">2 стіл</span></div>
-                <div class="timeline-row"><span class="time">18:30</span><span class="event-title">Весільний Торт</span></div>
-                <div class="timeline-row"><span class="time">19:00</span><span class="event-title">Пати тайм (Танці)</span></div>
-                <div class="timeline-row"><span class="time">20:00</span><span class="event-title">Вечірній Трансфер</span></div>
+                <div class="timeline-row"><span class="time">18:30</span><span class="event-title">Торт</span></div>
+                <div class="timeline-row"><span class="time">19:00</span><span class="event-title">Пати тайм</span></div>
+                <div class="timeline-row"><span class="time">20:00</span><span class="event-title">Трансфер</span></div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <section class="dress-code-section">
+    <div class="slide-section">
+        <div class="slide-content">
             <h2>Dress Code</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 15px;">Будемо вдячні, якщо ви підтримаєте кольорову гаму нашого свята у ніжних та природних відтінках:</p>
+            <p style="font-size: 14px; padding: 0 10px;">Будемо вдячні, якщо ви підтримаєте кольорову гаму нашого свята:</p>
             
             <div class="palette-grid">
                 <div class="color-ball"><div class="color-preview" style="background-color: #E8D3C7;"></div>pink</div>
@@ -499,99 +497,90 @@
                 <div class="color-ball"><div class="color-preview" style="background-color: #A293A7;"></div>lilac</div>
                 <div class="color-ball"><div class="color-preview" style="background-color: #222222;"></div>black</div>
             </div>
-            
-            <p style="font-size: 13px; color: #7A6B62; line-height: 1.8;">
-                Просимо за можливістю уникати:<br>
-                <strong>total white • neon colors • bright red</strong>
-            </p>
-        </section>
+            <p style="font-size: 12px; color: #7A6B62;">Просимо уникати: total white • neon • bright red</p>
+        </div>
+    </div>
 
-        <section>
+    <div class="slide-section">
+        <div class="slide-content">
             <h2>Замість квітів</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 15px; line-height: 1.7; max-width: 360px; margin: 0 auto;">
-                Будемо раді пляшці вашого улюбленого напою з кількома теплими словами для нас. Нехай вона стане частиною нашої особливої колекції спогадов. 🥂
-            </p>
+            <p style="font-size: 14px; line-height: 1.7; padding: 0 15px;">Будемо раді пляшці улюбленого напою з кількома теплими словами для нас. Нехай вона стане частиною нашої особливої колекції спогадів. 🥂</p>
             <div class="branch-decor">🍃</div>
-        </section>
+        </div>
+    </div>
 
-        <section id="rsvp-section" class="rsvp-section">
+    <div class="slide-section" id="slide-rsvp">
+        <div class="slide-content scrollable">
             <h2>Підтвердження</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 14px; margin-bottom: 10px; color: #6E5F55;">Будь ласка, заповніть анкету присутністі до 01.07.2026:</p>
             
-            <div class="rsvp-box">
-                <form id="wedding-rsvp-form" action="https://formspree.io/f/ТВОЙ_ID_FORMSPREE" method="POST">
-                    
-                    <div class="form-item">
-                        <label>Ваше ім'я та прізвище</label>
-                        <input type="text" id="guest-name-input" name="Имя_Гостя" required placeholder="Марія Ковальчук">
-                    </div>
+            <form id="wedding-rsvp-form" action="https://formspree.io/f/ТВОЙ_ID_FORMSPREE" method="POST">
+                <div class="form-item">
+                    <label>Ваше ім'я та прізвище</label>
+                    <input type="text" id="guest-name-input" name="Имя_Гостя" required placeholder="Марія Ковальчук">
+                </div>
 
-                    <div class="form-item">
-                        <label>Чи зможете ви бути присутніми?</label>
-                        <div class="radio-list">
-                            <label class="radio-item">
-                                <input type="radio" name="Присутствие" value="Приду" checked required>
-                                <span>Так, із задоволенням!</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="Присутствие" value="Не приду">
-                                <span>На жаль, не зможу</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-item" id="plus-one-zone">
+                <div class="form-item">
+                    <label>Чи зможете ви бути присутніми?</label>
+                    <div class="radio-list">
                         <label class="radio-item">
-                            <input type="checkbox" id="plus-one-checkbox" name="Идет_с_парой" value="Да">
-                            <span>Я буду з парою (+1)</span>
+                            <input type="radio" name="Присутствие" value="Приду" checked required>
+                            <span>Так, із задоволенням!</span>
                         </label>
-                        
-                        <div class="hidden-input-block" id="partner-input-block">
-                            <label style="margin-top: 12px; font-size: 11px;">Ім'я та прізвище вашої пари</label>
-                            <input type="text" id="partner-name-input" name="Имя_Спутника" placeholder="Введіть ім'я пари">
-                        </div>
+                        <label class="radio-item">
+                            <input type="radio" name="Присутствие" value="Не приду">
+                            <span>На жаль, не зможу</span>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="form-item">
-                        <label>Переваги в алкоголі</label>
-                        <select name="Алкоголь">
-                            <option value="Вино">Вино (червоне / біле)</option>
-                            <option value="Ігристе">Ігристе (Шампанське)</option>
-                            <option value="Міцні напої">Міцні напої (Віскі / Коньяк)</option>
-                            <option value="Безалкогольні">Не вживаю алкоголь</option>
-                        </select>
+                <div class="form-item" id="plus-one-zone">
+                    <label class="radio-item">
+                        <input type="checkbox" id="plus-one-checkbox" name="Идет_с_парой" value="Да">
+                        <span>Я буду з парою (+1)</span>
+                    </label>
+                    
+                    <div class="hidden-input-block" id="partner-input-block">
+                        <label style="margin-top: 8px;">Ім'я та прізвище супутника</label>
+                        <input type="text" id="partner-name-input" name="Имя_Спутника" placeholder="Ім'я вашої пари">
                     </div>
+                </div>
 
-                    <button type="submit" id="submit-btn" class="submit-button">Надіслати відповідь</button>
-                </form>
+                <div class="form-item">
+                    <label>Ваші переваги в алкоголі</label>
+                    <select name="Алкоголь">
+                        <option value="Вино">Вино (червоне / біле)</option>
+                        <option value="Ігристе">Ігристе (Шампанське)</option>
+                        <option value="Міцні напої">Міцні напої (Віскі / Коньяк)</option>
+                        <option value="Безалкогольні">Не вживаю алкоголь</option>
+                    </select>
+                </div>
 
-                <div id="success-alert" class="status-message">Дякуємо! Вашу відповідь успішно збережено в Google Таблицю. ♥</div>
-            </div>
-        </section>
+                <button type="submit" id="submit-btn" class="submit-button">Надіслати відповідь</button>
+            </form>
+            <div id="success-alert" class="status-message">Дякуємо! Відповідь успішно збережено. ♥</div>
+        </div>
+    </div>
 
-        <section style="border-top: 1px solid var(--light-gold);">
+    <div class="slide-section">
+        <div class="slide-content">
             <h2>Локація</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 18px; font-weight: 500;">с. Сурсько-Литовське</p>
-            <p style="font-size: 14px; color: #7A6B62; margin-bottom: 15px;">вул. Шевченка, 45 | Dnipro</p>
+            <p style="font-size: 16px; font-weight: bold;">с. Сурсько-Литовське</p>
+            <p style="font-size: 13px; color: #7A6B62; margin-bottom: 10px;">вул. Шевченка, 45 | Dnipro</p>
             
-            <a href="https://maps.google.com/?q=Сурсько-Литовське+вул.+Шевченка+45" target="_blank" class="btn-action btn-primary" style="font-size: 11px;">Відкрити в Google Навігаторі</a>
-
             <div class="map-box">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2651.6555890929267!2d34.93329991270211!3d48.3479249711476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dbf004954954c3%3A0xf3bd614898182c8a!2z0YPQuy4g0KjQtdCy0YfQtdC90LrQviwgNDUsINCh0YPRgNGB0LrQvi3Qm9C40YLQvtCy0YHQutC-0LUsINCU0L3QtdC_0YDQvtC_0LXRgtGA0L7QstGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCDQo9C60YDQsNC40L3QsCwgNTIwNjQ!5e0!3m2!1sru!2sde!4v1779888612826!5m2!1sru!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2650.7877239712613!2d34.9351052!3d48.3262663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dba46e6a1cd031%3A0x6bd77a7f6da9adcb!2z0YPQuy4g0KjQtdCy0YfQtdC90LrQviwgNDUsINCh0YPRgNGB0LrQvi3Qm9C40YLQvtCy0YHQutCvtNC1LCDQlNC90LXQv9GA0L7Qv9C10YLRgNC-0LLRgdC60DRRjyDQvtCx0LvQsNGB0YLRjCwgNDkwMDA!5e0!3m2!1sru!2sua!4v1716800000000!5m2!1sru!2sua" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-        </section>
-
-        <section style="font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--accent-gold); padding: 40px 0;">
-            До зустрічі на весіллі!
-        </section>
+            
+            <p style="font-family: var(--font-serif); font-style: italic; font-size: 16px; color: var(--accent-gold); margin-top: 15px;">До зустрічі!</p>
+        </div>
     </div>
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. ДИНАМИЧЕСКИЙ ТАЙМЕР ОТСЧЕТА (Целевая дата: 1 августа 2026)
+            // 1. РАБОТА ТАЙМЕРА (До 1 августа 2026)
             const weddingDate = new Date("August 1, 2026 14:00:00").getTime();
 
             function updateTimer() {
@@ -619,7 +608,7 @@
             setInterval(updateTimer, 1000);
             updateTimer();
 
-            // 2. АВТОЗАПОЛНЕНИЕ ИМЕНИ ГОСТЯ ИЗ ССЫЛКИ
+            // 2. ИМЯ ИЗ ССЫЛКИ
             const urlParams = new URLSearchParams(window.location.search);
             const guestName = urlParams.get('name');
             const titleElement = document.getElementById('web-guest-name');
@@ -631,7 +620,7 @@
                 inputElement.value = formattedName;
             }
 
-            // 3. ИНТЕРАКТИВНЫЙ БЛОК ДЛЯ ВВОДА ИМЕНИ СПУТНИКА (+1)
+            // 3. ЛОГИКА РАСКРЫТИЯ ДЛЯ ПАРЫ (+1)
             const plusOneCheckbox = document.getElementById('plus-one-checkbox');
             const partnerBlock = document.getElementById('partner-input-block');
             const partnerInput = document.getElementById('partner-name-input');
@@ -649,7 +638,6 @@
                 }
             });
 
-            // Прятать блок +1, если гость нажал "Не приду"
             statusRadios.forEach(radio => {
                 radio.addEventListener('change', function() {
                     if (this.value === 'Не приду') {
@@ -664,7 +652,7 @@
                 });
             });
 
-            // 4. ОТПРАВКА ДАННЫХ АНКЕТЫ БЕЗ ПЕРЕЗАГРУЗКИ СТРАНИЦЫ
+            // 4. AJAX ОТПРАВКА ФОРМЫ СБОРА ДАННЫХ
             const form = document.getElementById('wedding-rsvp-form');
             const submitBtn = document.getElementById('submit-btn');
             const successAlert = document.getElementById('success-alert');
@@ -684,13 +672,13 @@
                         form.style.display = 'none';
                         successAlert.style.display = 'block';
                     } else {
-                        alert('Сталася помилка. Будь ласка, спробуйте ще раз.');
+                        alert('Сталася помилка. Спробуйте ще раз.');
                         submitBtn.innerText = "Надіслати відповідь";
                         submitBtn.disabled = false;
                     }
                 })
                 .catch(() => {
-                    alert('Помилка мережі. Перевірте підключення до Інтернету.');
+                    alert('Помилка мережі.');
                     submitBtn.innerText = "Надіслати відповідь";
                     submitBtn.disabled = false;
                 });

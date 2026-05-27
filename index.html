@@ -4,20 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Запрошення на весілля Дар'ї та Антона</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <style>
-        /* ЦВЕТОВАЯ ПАЛИТРА И СТИЛИСТИКА ИЗ МАКЕТОВ */
         :root {
-            --bg-color: #FDFBF7; /* Благородный молочно-кремовый фон карточек */
-            --text-main: #3D2B1F; /* Глубокий шоколадно-коричневый для текста */
-            --accent-gold: #C5A059; /* Матовое золото для элементов декора */
-            --light-gold: rgba(197, 160, 89, 0.3);
-            --font-serif: 'Playfair Display', serif;
-            --font-body: 'Lora', serif;
+            --bg-color: #fbf9f4;
+            --main-text: #3d342e;
+            --accent-gold: #c5a880;
+            --light-gold: #e6dec3;
+            --sub-text: #7a6b62;
         }
 
         * {
@@ -27,597 +20,303 @@
         }
 
         body {
-            background-color: #EFEBE4; /* Мягкий фоновый цвет за пределами телефона */
-            color: var(--text-main);
-            font-family: var(--font-body);
-            line-height: 1.6;
-        }
-
-        /* КОНТЕЙНЕР СМАРТФОНА (Вертикальная премиум-открытка) */
-        .wrapper {
-            max-width: 480px;
-            margin: 0 auto;
+            font-family: 'Georgia', serif;
             background-color: var(--bg-color);
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(90, 75, 65, 0.15);
-            position: relative;
-        }
-
-        /* ДЕКОРАТИВНЫЕ ШЕЛКОВЫЕ СКЛАДКИ (Имитация ткани по углам из референсов) */
-        .silk-decor {
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            opacity: 0.85;
-            pointer-events: none;
-            z-index: 10;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-        /* В эти плейсхолдеры можно будет загрузить вырезанные кусочки шелка, если захотите */
-        .silk-top-left { top: 0; left: 0; border-top-left-radius: 20px; }
-        .silk-top-right { top: 0; right: 0; }
-
-        /* ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ */
-        section {
-            padding: 55px 35px;
+            color: var(--main-text);
+            line-height: 1.6;
             text-align: center;
+        }
+
+        /* Ограничитель по ширине, чтобы на телефонах и ПК выглядело как аккуратная карточка */
+        .wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fbf9f4;
+            padding: 40px 20px;
             position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.03);
+        }
+
+        section {
+            margin-bottom: 55px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: normal;
+            margin: 15px 0;
+            letter-spacing: 2px;
         }
 
         h2 {
-            font-family: var(--font-serif);
-            font-size: 24px;
-            font-weight: 400;
+            font-size: 26px;
+            font-weight: normal;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: var(--text-main);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            color: var(--main-text);
         }
 
-        /* Изтонченные разделители с сердечком из оригинального макета */
+        .names-block {
+            font-size: 46px;
+            line-height: 1.2;
+            margin: 25px 0;
+        }
+
+        .ampersand {
+            font-style: italic;
+            color: var(--accent-gold);
+            font-size: 36px;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .date-badge {
+            font-size: 20px;
+            letter-spacing: 4px;
+            margin: 20px 0;
+            color: var(--main-text);
+        }
+
+        .main-badge {
+            border: 1px solid var(--accent-gold);
+            display: inline-block;
+            padding: 8px 25px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
         .heart-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px 0 25px 0;
+            color: var(--accent-gold);
+            font-size: 14px;
+            margin: 15px 0;
+            position: relative;
         }
         .heart-divider::before, .heart-divider::after {
-            content: '';
+            content: "";
+            position: absolute;
+            top: 50%;
             width: 50px;
             height: 1px;
             background-color: var(--light-gold);
         }
-        .heart-divider span {
-            color: var(--accent-gold);
-            font-size: 10px;
-            margin: 0 10px;
-        }
+        .heart-divider::before { right: calc(50% + 15px); }
+        .heart-divider::after { left: calc(50% + 15px); }
 
-        /* Растительный золотой орнамент (веточка внизу секций) */
-        .branch-decor {
-            color: var(--accent-gold);
-            font-size: 20px;
-            margin-top: 25px;
-            letter-spacing: 2px;
+        /* Динамический блок приветствия гостей */
+        .guest-section {
+            padding: 20px 10px;
         }
-
-        /* 1. ОБЛОЖКА (на основе 1112.jpg) */
-        .hero {
-            padding: 90px 40px;
-            border: 1px solid var(--light-gold);
-            margin: 20px;
-            background: #fff;
-        }
-        .hero-names {
-            font-family: var(--font-serif);
-            font-size: 46px;
-            font-weight: 400;
-            line-height: 1.2;
-            margin: 15px 0;
-        }
-        .hero-names span {
-            font-size: 32px;
-            color: var(--accent-gold);
-            display: block;
-            margin: 5px 0;
-        }
-        .hero-date {
-            font-size: 18px;
-            letter-spacing: 4px;
-            margin: 20px 0;
-            display: inline-block;
-        }
-        .hero-badge {
-            border: 1px solid var(--accent-gold);
-            padding: 6px 20px;
-            font-size: 11px;
+        .guest-title {
+            font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        /* 2. ИМЕННОЕ ПРИВЕТСТВИЕ (на основе 1111.jpg) */
-        .greeting-title {
-            font-family: var(--font-body);
-            font-size: 16px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            color: var(--sub-text);
+            margin-bottom: 10px;
         }
         .guest-name {
-            font-family: var(--font-serif);
-            font-size: 36px;
-            font-style: italic;
+            font-size: 28px;
             color: var(--accent-gold);
-            font-weight: 400;
-            margin: 10px 0 20px 0;
+            font-style: italic;
+            margin-bottom: 20px;
+            min-height: 35px;
         }
 
-        /* 3. ИСТОРИЯ + ДЕТСКОЕ ФОТО В АРКЕ (на основе 1113.jpg и 1117.jpg) */
-        .photo-section { background-color: #fff; }
-        
-        /* Та самая культовая свадебная арка */
-        .arch-frame {
-            width: 240px;
-            height: 340px;
-            margin: 0 auto 25px auto;
-            border: 1px solid var(--accent-gold);
-            border-radius: 120px 120px 0 0; /* Округление сверху */
-            padding: 7px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        /* Красивая свадебная арка для детского фото */
+        .photo-arch {
+            width: 280px;
+            height: 380px;
+            margin: 0 auto 20px auto;
+            border: 2px solid var(--light-gold);
+            border-top-left-radius: 150px;
+            border-top-right-radius: 150px;
+            padding: 8px;
+            box-sizing: border-box;
         }
-        .arch-inside {
-            width: 100%;
-            height: 100%;
-            border-radius: 113px 113px 0 0;
-            overflow: hidden;
-            background-color: #EFEBE4;
-            position: relative;
-        }
-        .arch-inside img {
+
+        .photo-arch img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: sepia(15%) contrast(102%); /* Легкий винтажный теплый фильтр */
-        }
-        .story-quote {
-            font-size: 16px;
-            font-style: italic;
-            color: #5A4B41;
-            padding: 0 15px;
+            border-top-left-radius: 140px;
+            border-top-right-radius: 140px;
         }
 
-        /* 4. ТАЙМЛАЙН / ПРОГРАММА (на основе 1114.jpg) */
-        .timeline-container {
-            margin-top: 30px;
-            position: relative;
-            text-align: left;
-            padding-left: 45px;
-        }
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 5px;
-            bottom: 5px;
-            width: 1px;
-            background-color: var(--accent-gold);
-        }
-        .timeline-row {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        .timeline-row::before {
-            content: '';
-            position: absolute;
-            left: -28px;
-            top: 6px;
-            width: 7px;
-            height: 7px;
-            background-color: var(--accent-gold);
-            border-radius: 50%;
-        }
-        .time {
-            font-family: var(--font-serif);
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-right: 15px;
-            display: inline-block;
-            width: 50px;
-        }
-        .event-title {
-            font-size: 15px;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        /* 5. ДРЕСС-КОД С ОРИГИНАЛЬНОЙ ПАЛИТРОЙ (на основе 1114.jpg) */
-        .dress-code-section { background-color: #fff; }
-        .palette-grid {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin: 25px 0;
-        }
-        .color-ball {
-            text-align: center;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #8C7E74;
-        }
-        .color-preview {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            margin-bottom: 6px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.04);
-        }
-        .rules-text {
-            font-size: 13px;
-            color: #7A6B62;
-            line-height: 1.8;
-            margin-top: 15px;
-        }
-
-        /* 6. ЛОКАЦИЯ (на основе 1109.jpg) */
-        .address-text {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        .sub-address {
-            font-size: 14px;
-            color: #7A6B62;
-            margin-bottom: 20px;
-        }
-        .map-box {
-            width: 100%;
-            height: 240px;
-            border: 1px solid var(--light-gold);
-            margin-top: 15px;
-        }
-
-        /* ДЕТАЛИ / АЛКОГОЛЬ (на основе 1115.jpg) */
-        .details-section {
-            background-color: #fff;
-            font-size: 15px;
-        }
-
-        /* 7. ИНТЕРАКТИВНАЯ RSVP ФОРМА */
-        .rsvp-section {
-            border-top: 1px solid var(--light-gold);
-        }
-        form { text-align: left; margin-top: 10px; }
-        .form-item { margin-bottom: 20px; }
-        label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #DCD7CE;
-            background-color: #FCFAF7;
-            color: var(--text-main);
-            font-family: var(--font-body);
-            font-size: 15px;
-        }
-        input[type="text"]:focus, select:focus {
-            border-color: var(--accent-gold);
-            outline: none;
-            background-color: #fff;
-        }
-        .radio-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 5px;
-        }
-        .radio-item {
+        /* Таймлайн */
+        .timeline-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 15px;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 16px;
         }
-        input[type="radio"], input[type="checkbox"] {
-            accent-color: var(--text-main);
-            width: 17px;
-            height: 17px;
-        }
-        
-        /* Плавная анимация появления поля имени спутника */
-        .hidden-input-block {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-        .hidden-input-block.open {
-            max-height: 100px;
-            opacity: 1;
-            margin-top: 15px;
-        }
-
-        .submit-button {
-            background-color: var(--text-main);
-            color: #fff;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            font-family: var(--font-body);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-        .submit-button:hover { background-color: var(--accent-gold); }
-        
-        .status-message {
-            padding: 15px;
-            margin-top: 15px;
-            display: none;
-            text-align: center;
-            font-weight: 600;
-        }
-        .success { color: var(--accent-gold); }
-
-        .footer-text {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 18px;
+        .time {
+            font-weight: bold;
             color: var(--accent-gold);
-            padding: 40px 0;
+            width: 60px;
+            text-align: right;
+            margin-right: 20px;
+            letter-spacing: 1px;
+        }
+        .event-desc {
+            text-align: left;
+            width: 150px;
+            color: var(--main-text);
+        }
+
+        /* Дресс-код кружочки */
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .color-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .color-label {
+            font-size: 11px;
+            color: var(--sub-text);
+            margin-top: 50px;
+            text-transform: lowercase;
+        }
+
+        .avoid-text {
+            font-size: 13px;
+            color: var(--sub-text);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Карта */
+        .map-container {
+            width: 100%;
+            height: 280px;
+            border: 1px solid var(--light-gold);
+            margin-top: 20px;
+        }
+
+        .footer-leaf {
+            margin-top: 20px;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
     <div class="wrapper">
-        <div class="silk-decor silk-top-left"></div>
-        <div class="silk-decor silk-top-right"></div>
 
-        <section style="padding-top: 40px; padding-bottom: 20px;">
-            <div class="hero">
-                <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 11px; color: var(--accent-gold);">Запрошення</p>
-                <h1 class="hero-names">Дар'я<span>&</span>Антон</h1>
-                <div class="heart-divider"><span>♦</span></div>
-                <p class="hero-date">01 | 08 | 2026</p>
-                <br>
-                <div class="hero-badge">Запрошення на весілля</div>
+        <section>
+            <div class="names-block">
+                <div>Дар'я</div>
+                <span class="ampersand">&</span>
+                <div>Антон</div>
             </div>
-        </section>
-
-        <section style="padding-top: 20px;">
-            <p class="greeting-title">Шановні</p>
-            <h1 id="web-guest-name" class="guest-name">Друзі</h1>
-            <p style="font-size: 15px; padding: 0 10px;">запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя ✨</p>
-            <div class="branch-decor">🍃</div>
-        </section>
-
-        <section class="photo-section">
             <div class="heart-divider"><span>♥</span></div>
-            
-            <div class="arch-frame">
-                <div class="arch-inside">
-                    <img src="1117.jpg" alt="Молодята в дитинстві">
-                </div>
-            </div>
+            <div class="date-badge">01 | 08 | 2026</div>
+            <div class="main-badge">Запрошення на весілля</div>
+        </section>
 
-            <p class="story-quote">«У кожної історії є особлива глава. Наша починається тут. Дякую, що будете поруч із нами у цей особливый день!»</p>
-            <div class="branch-decor">🍃</div>
+        <section style="padding: 0 25px; font-style: italic; color: var(--sub-text); font-size: 17px;">
+            <p>«У кожної історії є особлива глава. Наша починається тут. Дякуємо, що будете поруч із нами у цей особливий день! Це буде незабутньо»</p>
+        </section>
+
+        <section class="guest-section">
+            <div class="guest-title">Шановні</div>
+            <div class="guest-name" id="guestName">Друзі</div>
+            <p style="font-size: 16px; padding: 0 20px;">запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя</p>
+        </section>
+
+        <section>
+            <div class="photo-arch">
+                <img src="1117.jpg" alt="Дар'я та Антон">
+            </div>
+            <p style="font-style: italic; font-size: 15px; color: var(--sub-text);">І серед мільйонів людей ми знайшли одне одного.</p>
         </section>
 
         <section>
             <h2>Timeline</h2>
             <div class="heart-divider"><span>♥</span></div>
             
-            <div class="timeline-container">
-                <div class="timeline-row"><span class="time">14:00</span><span class="event-title">Welcome zone</span></div>
-                <div class="timeline-row"><span class="time">14:30</span><span class="event-title">Церемонія</span></div>
-                <div class="timeline-row"><span class="time">15:30</span><span class="event-title">1 стіл</span></div>
-                <div class="timeline-row"><span class="time">17:30</span><span class="event-title">2 стіл</span></div>
-                <div class="timeline-row"><span class="time">18:30</span><span class="event-title">Торт</span></div>
-                <div class="timeline-row"><span class="time">19:00</span><span class="event-title">Пати тайм</span></div>
-                <div class="timeline-row"><span class="time">20:00</span><span class="event-title">Трансфер</span></div>
-            </div>
+            <div class="timeline-item"><div class="time">14:00</div><div class="event-desc">Welcome zone</div></div>
+            <div class="timeline-item"><div class="time">14:30</div><div class="event-desc">Церемонія</div></div>
+            <div class="timeline-item"><div class="time">15:30</div><div class="event-desc">1 стіл</div></div>
+            <div class="timeline-item"><div class="time">17:30</div><div class="event-desc">2 стіл</div></div>
+            <div class="timeline-item"><div class="time">18:30</div><div class="event-desc">Торт</div></div>
+            <div class="timeline-item"><div class="time">19:00</div><div class="event-desc">Пати тайм</div></div>
+            <div class="timeline-item"><div class="time">20:00</div><div class="event-desc">Трансфер</div></div>
         </section>
 
-        <section class="dress-code-section">
+        <section>
             <h2>Dress Code</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 15px;">Будемо вдячні, якщо ви підтримаєте кольорову гаму нашого свята у ніжних та природних відтінках:</p>
+            <p style="font-size: 15px; padding: 0 20px; color: var(--sub-text);">Будемо вдячні, якщо ви підтримаєте кольорову гаму нашого свята у ніжних та природних відтінках:</p>
             
-            <div class="palette-grid">
-                <div class="color-ball"><div class="color-preview" style="background-color: #E8D3C7;"></div>pink</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #E2CEB1;"></div>champagne</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #C5A059;"></div>gold</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #A3B19B;"></div>sage</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #4A3E3D;"></div>brown</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #7B8CA3;"></div>blue</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #A293A7;"></div>lilac</div>
-                <div class="color-ball"><div class="color-preview" style="background-color: #222222;"></div>black</div>
+            <div class="color-palette">
+                <div class="color-circle" style="background-color: #b77a82;"><span class="color-label">pink</span></div>
+                <div class="color-circle" style="background-color: #e3cca7;"><span class="color-label">champagne</span></div>
+                <div class="color-circle" style="background-color: #cd9f5b;"><span class="color-label">gold</span></div>
+                <div class="color-circle" style="background-color: #9bb091;"><span class="color-label">sage</span></div>
+                <div class="color-circle" style="background-color: #614635;"><span class="color-label">brown</span></div>
+                <div class="color-circle" style="background-color: #7296a6;"><span class="color-label">blue</span></div>
+                <div class="color-circle" style="background-color: #9382a3;"><span class="color-label">lilac</span></div>
+                <div class="color-circle" style="background-color: #242526;"><span class="color-label">black</span></div>
             </div>
             
-            <p class="rules-text">
-                Просимо уникать:<br>
-                <strong>total white • neon colors • bright red</strong>
-            </p>
+            <p class="avoid-text" style="margin-top: 35px;">Просимо уникати:<br>total white • neon colors • bright red</p>
+        </section>
+
+        <section style="padding: 0 20px;">
+            <h2>Замість квітів</h2>
+            <div class="heart-divider"><span>♥</span></div>
+            <p style="font-size: 16px; margin-bottom: 15px;">будемо раді пляшці улюбленого напою з кількома теплими словами для нас.</p>
+            <p style="font-style: italic; color: var(--sub-text); font-size: 15px;">Нехай вона стане частиною нашої особливої колекції спогадів.</p>
         </section>
 
         <section>
             <h2>Локація</h2>
             <div class="heart-divider"><span>♥</span></div>
-            <p class="address-text" style="font-size: 18px; margin-bottom: 5px;">с. Сурсько-Литовське</p>
-            <p class="sub-address" style="font-size: 14px; color: #7A6B62; margin-bottom: 20px;">вул. Шевченка, 45 | Dnipro</p>
+            <p style="font-size: 18px; font-weight: bold;">с. Сурсько-Литовське</p>
+            <p style="font-size: 15px; color: var(--sub-text);">вул. Шевченка, 45 | Dnipro</p>
             
-            <div class="map-box" style="width: 100%; height: 260px; border: 1px solid var(--light-gold); margin-top: 15px;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2650.7719601332453!2d34.93322197686535!3d48.33604323719946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dba54b1fef038b%3A0xc4eb09f30ea1ee56!2z0YPQuy4g0KjQtdCy0YfQtdC90LrQviwgNDUsINCh0YPRgNGB0LrQvi3Qm9C40YLQvtCy0YHQutC_0LUsINCU0L3QtdC_0YDQvtC_0LXRgtGA0L7QstGB0LrQsNGPINGDQsdC70LDRgdGC0YwsINCj0LrRgNCw0LjQvdCwLCA1MjAwNQ!5m2!1sru!2sde" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2651.4428054743283!2d34.93322197686523!3d48.35205563604082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dbca2c12140bb7%3A0x6b6c22d7cb761fa3!2z0YPQuy4g0KjQtdCy0YfQtdC90LrQviwgNDUsINCh0YPRgNGB0LrQvt9b0JvQuNGC0L7QstGB0LrQvtC1LCD0L3QtdC_0YDQvtC_0LXRgtGA0L7QstGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCDQo9C60YDQsNC40L3QsCwgNDkwMDA!5e0!3m2!1sru!2sde!4v1716815000000!5m2!1sru!2sde" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
         </section>
 
-        <section class="details-section">
-            <h2>Замість квітів</h2>
-            <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 15px; line-height: 1.7;">Будемо раді пляшці улюбленого напою з кількома теплими словами для нас. Нехай вона стане частиною нашої особливої колекції спогадів. 🥂</p>
-            <div class="branch-decor">🍃</div>
-        </section>
-
-        <section class="rsvp-section">
-            <h2>Підтвердження</h2>
-            <div class="heart-divider"><span>♥</span></div>
-            <p style="font-size: 14px; margin-bottom: 20px; color: #6E5F55;">Будь ласка, заповніть анкету гостя нижче:</p>
-            
-            <form id="wedding-rsvp-form" action="https://formspree.io/f/mbdbqron" method="POST">
-                <div class="form-item">
-                    <label>Ваше ім'я та прізвище</label>
-                    <input type="text" id="guest-name-input" name="Имя_Гостя" required placeholder="Марія Ковальчук">
-                </div>
-
-                <div class="form-item">
-                    <label>Чи зможете ви бути присутніми?</label>
-                    <div class="radio-list">
-                        <label class="radio-item">
-                            <input type="radio" name="Присутствие" value="Приду" checked required>
-                            <span>Так, із задоволенням!</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="Присутствие" value="Не приду">
-                            <span>На жаль, не зможу</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-item" id="plus-one-zone">
-                    <label class="radio-item">
-                        <input type="checkbox" id="plus-one-checkbox" name="Идет_с_парой" value="Да">
-                        <span>Я буду з парою (+1)</span>
-                    </label>
-                    
-                    <div class="hidden-input-block" id="partner-input-block">
-                        <label style="margin-top: 10px;">Ім'я та прізвище супутника</label>
-                        <input type="text" id="partner-name-input" name="Имя_Спутника" placeholder="Введіть ім'я вашої пари">
-                    </div>
-                </div>
-
-                <div class="form-item">
-                    <label>Ваші переваги в алкоголі</label>
-                    <select name="Алкоголь">
-                        <option value="Вино">Вино (червоне / біле)</option>
-                        <option value="Ігристе">Ігристе (Шампанське)</option>
-                        <option value="Міцні напої">Міцні напої (Віскі / Коньяк)</option>
-                        <option value="Безалкогольні">Не вживаю алкоголь</option>
-                    </select>
-                </div>
-
-                <button type="submit" id="submit-btn" class="submit-button">Надіслати відповідь</button>
-            </form>
-
-            <div id="success-alert" class="status-message success">Дякуємо! Вашу відповідь успішно збережено. ♥</div>
-        </section>
-
-        <section class="footer-text">
-            До зустрічі!
-        </section>
+        <div class="footer-leaf">🌿</div>
     </div>
 
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            // Чтение имени гостя из адресной строки (?name=Марія+та+Валерій)
+        function getGuestName() {
             const urlParams = new URLSearchParams(window.location.search);
-            const guestName = urlParams.get('name');
-            
-            const titleElement = document.getElementById('web-guest-name');
-            const inputElement = document.getElementById('guest-name-input');
-
-            if (guestName) {
-                const formattedName = guestName.replace(/\+/g, ' ');
-                titleElement.innerText = formattedName;
-                inputElement.value = formattedName;
+            const name = urlParams.get('name');
+            if (name) {
+                // Заменяет плюсы или %20 на пробелы и выводит на экран
+                document.getElementById('guestName').innerText = name.replace(/\+/g, ' ');
             }
-
-            // Динамическое раскрытие блока "+1"
-            const plusOneCheckbox = document.getElementById('plus-one-checkbox');
-            const partnerBlock = document.getElementById('partner-input-block');
-            const partnerInput = document.getElementById('partner-name-input');
-            const statusRadios = document.querySelectorAll('input[name="Присутствие"]');
-            const plusOneZone = document.getElementById('plus-one-zone');
-
-            plusOneCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    partnerBlock.classList.add('open');
-                    partnerInput.setAttribute('required', 'required');
-                } else {
-                    partnerBlock.classList.remove('open');
-                    partnerInput.removeAttribute('required');
-                    partnerInput.value = '';
-                }
-            });
-
-            // Если гость нажимает "Не приду" - прячем опцию выбора пары
-            statusRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'Не приду') {
-                        plusOneZone.style.display = 'none';
-                        plusOneCheckbox.checked = false;
-                        partnerBlock.classList.remove('open');
-                        partnerInput.removeAttribute('required');
-                        partnerInput.value = '';
-                    } else {
-                        plusOneZone.style.display = 'block';
-                    }
-                });
-            });
-
-            // Отправка формы без перезагрузки страницы (AJAX)
-            const form = document.getElementById('wedding-rsvp-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const successAlert = document.getElementById('success-alert');
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                submitBtn.innerText = "Надсилання...";
-                submitBtn.disabled = true;
-
-                fetch(form.action, {
-                    method: form.method,
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        form.style.display = 'none';
-                        successAlert.style.display = 'block';
-                    } else {
-                        alert('Сталася помилка. Будь ласка, спробуйте ще раз.');
-                        submitBtn.innerText = "Надіслати відповідь";
-                        submitBtn.disabled = false;
-                    }
-                })
-                .catch(() => {
-                    alert('Помилка з\'єднання. Перевірте інтернет.');
-                    submitBtn.innerText = "Надіслати відповідь";
-                    submitBtn.disabled = false;
-                });
-            });
-        });
+        }
+        window.onload = getGuestName;
     </script>
 </body>
 </html>

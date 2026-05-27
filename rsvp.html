@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="site-container">
+
+<nav>
+<a href="index.html">Головна</a>
+<a href="timeline.html">Програма</a>
+<a href="dresscode.html">Dress Code</a>
+<a href="location.html">Локація</a>
+<a href="rsvp.html">RSVP</a>
+</nav>
+
+<section>
+
+<h2>Підтвердження</h2>
+
+<form
+id="wedding-rsvp-form-final"
+action="https://formspree.io/f/mbdbqron"
+method="POST">
+
+<label>
+Ваше ім’я
+</label>
+
+<input
+type="text"
+name="Імя"
+required>
+
+<label>
+Чи будете присутні?
+</label>
+
+<label class="radio-label-item">
+<input type="radio" name="Присутність" value="Так" checked>
+Так
+</label>
+
+<label class="radio-label-item">
+<input type="radio" name="Присутність" value="Ні">
+Ні
+</label>
+
+<label class="radio-label-item">
+<input
+type="checkbox"
+id="plus-one-checkbox-btn">
+
+Я буду з парою
+</label>
+
+<div
+class="dynamic-partner-block"
+id="partner-input-area">
+
+<input
+type="text"
+placeholder="Ім’я супутника">
+
+</div>
+
+<label>
+Алкоголь
+</label>
+
+<select name="Алкоголь">
+
+<option>Вино</option>
+<option>Ігристе</option>
+<option>Віскі</option>
+<option>Безалкогольні</option>
+
+</select>
+
+<button
+type="submit"
+class="btn-submit-rsvp">
+
+Надіслати
+
+</button>
+
+</form>
+
+</section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

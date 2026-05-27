@@ -2,849 +2,515 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Запрошення на весілля Дар'ї та Антона</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запрошення на весілля | Дар'я & Антон</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg-creamy: #F7F4EE;     /* Кремовый фон страниц */
-            --text-main: #3D2B1F;     /* Шоколадный текст */
-            --gold-accent: #C5A059;   /* Матовое золото */
-            --border-color: rgba(197, 160, 89, 0.35);
-        }
-
+        /* Стилизация скроллбара и обнуление отступов */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
         }
-
+        html {
+            scroll-behavior: smooth;
+            background-color: #121212;
+        }
         body {
-            background-color: #E2DDD5; /* Внешний фон вокруг телефона на ПК */
-            color: var(--text-main);
-            font-family: 'Lora', serif;
-            line-height: 1.5;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: 'Montserrat', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333333;
         }
 
-        /* ОСНОВНОЙ КОНТЕЙНЕР (Эмулирует экран смартфона) */
-        .wrapper {
+        /* Главный мобильный контейнер (Оболочка под размер экрана смартфона) */
+        .phone-wrapper {
             width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            height: 100dvh;
-            background-color: var(--bg-creamy);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+            max-width: 480px;
+            background-color: #fbf9f6;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
             position: relative;
-            overflow: hidden;
+            padding-bottom: 80px; /* Отступ внизу, чтобы меню не перекрывало контент */
+            overflow-x: hidden;
         }
 
-        /* ШЕЛКОВЫЕ ДЕКОРАТИВНЫЕ СКЛАДКИ ПО УГЛАМ */
-        .silk-decor {
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            pointer-events: none;
-            z-index: 10;
-            opacity: 0.85;
-        }
-        .silk-top-left {
-            top: 0; left: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 Q30,10 40,40 Q10,70 0,100 Z" fill="%23E8D3C7" opacity="0.6"/><path d="M0,0 Q50,5 60,30 Q30,50 0,60 Z" fill="%23E2CEB1" opacity="0.4"/></svg>');
-        }
-        .silk-top-right {
-            top: 0; right: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M100,0 Q70,10 60,40 Q90,70 100,100 Z" fill="%23E2CEB1" opacity="0.6"/><path d="M100,0 Q50,5 40,30 Q70,50 100,60 Z" fill="%23C5A059" opacity="0.25"/></svg>');
-        }
-
-        /* СТРУКТУРА СЛАЙДОВ ПРЕЗЕНТАЦИИ */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 40px 25px 80px 25px; /* Нижний паддинг защищает от кнопок управления */
+        /* Элегантное плавающее меню (Размытое стекло) */
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(251, 249, 246, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1;
-            transform: scale(0.96) translateY(10px);
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                        visibility 0.5s;
-            overflow-y: auto; /* На случай маленьких экранов контент внутри слайда сможет прокрутиться */
+            gap: 15px;
+            z-index: 9999;
+            border: 1px solid rgba(207, 166, 104, 0.2);
+            width: 90%;
+            max-width: 420px;
+            justify-content: space-around;
         }
-
-        /* Слайд становится активным */
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 5;
-            transform: scale(1) translateY(0);
-        }
-
-        /* ТИПОГРАФИКА И ЭЛЕМЕНТЫ ДИЗАЙНА */
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 400;
-            margin-bottom: 5px;
-        }
-
-        .heart-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px auto 20px auto;
-            width: 65%;
-        }
-        .heart-divider::before, .heart-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background-color: var(--gold-accent);
-            opacity: 0.4;
-        }
-        .heart-divider-icon {
-            margin: 0 10px;
-            width: 11px;
-            height: 11px;
-            fill: var(--gold-accent);
-        }
-
-        .branch-decor {
-            width: 70px;
-            height: 25px;
-            margin: 15px auto 0 auto;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40"><path d="M10,20 Q50,15 90,20 M30,18 Q25,10 20,12 Q25,20 35,18 M45,17 Q43,8 36,9 Q40,18 50,17 M60,18 Q62,10 68,11 Q63,19 55,18" stroke="%23C5A059" stroke-width="1.5" fill="none"/></svg>');
-        }
-
-        /* СЛАЙД 1: СТИЛЬ ОБЛОЖКИ */
-        .hero-border {
-            border: 1px solid var(--border-color);
-            padding: 45px 20px;
-            position: relative;
-            width: 100%;
-        }
-        .hero-border::before {
-            content: '';
-            position: absolute;
-            top: 7px; bottom: 7px; left: 7px; right: 7px;
-            border: 1px solid rgba(197, 160, 89, 0.1);
-            pointer-events: none;
-        }
-        .hero-label {
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 12px;
-            color: #7A6B61;
-        }
-        .main-names {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            line-height: 1.2;
-            font-weight: 400;
-            margin: 15px 0;
-            letter-spacing: 1px;
-        }
-        .ampersand {
-            font-family: 'Great Vibes', cursive;
-            color: var(--gold-accent);
-            font-size: 42px;
-            display: block;
-            margin: -5px 0;
-        }
-        .wedding-date {
-            font-size: 18px;
-            letter-spacing: 4px;
-            margin: 20px 0;
+        .floating-nav a {
+            color: #555555;
+            text-decoration: none;
+            font-size: 11px;
             font-weight: 500;
-        }
-
-        /* ГЛАВНАЯ КНОПКА ЗАПУСКА НА СЛАЙДЕ 1 */
-        .start-presentation-btn {
-            background-color: transparent;
-            border: 1px solid var(--gold-accent);
-            color: var(--text-main);
-            padding: 10px 28px;
-            font-family: 'Lora', serif;
-            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            margin-top: 15px;
-            position: relative;
-            z-index: 20;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(197, 160, 89, 0.1);
+            padding: 4px 8px;
         }
-        .start-presentation-btn:hover {
-            background-color: var(--text-main);
-            color: #fff;
-            border-color: var(--text-main);
+        .floating-nav a:hover {
+            color: #b38b46;
         }
 
-        /* СЛАЙД 2: ПРИВЕТСТВИЕ */
-        .dynamic-guest-name {
-            font-family: 'Great Vibes', cursive;
-            font-size: 38px;
-            color: var(--gold-accent);
-            margin: 10px 0 15px 0;
-            font-weight: 400;
+        /* Веб-карточки (Интерактивные разделы вместо простого PDF-эффекта) */
+        .page-section {
+            width: 100%;
+            background-color: #fbf9f6;
+            position: relative;
+        }
+        .card-padded {
+            padding: 40px 25px;
+            text-align: center;
+        }
+
+        /* Плавная анимация появления элементов при загрузке */
+        .animate-fade {
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стили изображений-слайдов */
+        .slide-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Интерактивный живой Таймер обратного отсчета */
+        .timer-container {
+            background-color: #faf6f0;
+            border-top: 1px solid #f0eae1;
+            border-bottom: 1px solid #f0eae1;
+            padding: 35px 20px;
+            text-align: center;
+        }
+        .timer-title {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: #704e36;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .time-block {
+            background: #ffffff;
+            border: 1px solid #eaddce;
+            padding: 10px 0;
+            border-radius: 8px;
+            min-width: 70px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .time-block span {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+        .time-block label {
+            font-size: 9px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* Слайд персонального приветствия гостя */
+        .dynamic-greeting-slide {
+            background-color: #faf6f0;
+            padding: 55px 30px;
+            text-align: center;
+            border-left: 8px solid #dfc3b3; /* Имитация нежной ленты */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.01);
+        }
+        .greeting-prefix {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: #555;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .guest-name {
+            font-family: 'Caveat', cursive;
+            font-size: 40px;
+            color: #b38b46;
+            margin-bottom: 20px;
+            font-weight: 700;
             line-height: 1.2;
+            word-wrap: break-word;
         }
         .greeting-text {
+            font-family: 'Lora', serif;
             font-size: 15px;
-            color: #5A4B41;
+            line-height: 1.8;
+            color: #4a4a4a;
+            max-width: 340px;
+            margin: 0 auto;
         }
-
-        /* СЛАЙД 3: СТИХ / КРАСИВАЯ ЦИТАТА */
-        .quote-main-text {
-            font-size: 17px;
-            line-height: 1.7;
-            color: var(--text-main);
-            margin-bottom: 20px;
-        }
-        .quote-sub-text {
-            font-size: 15px;
-            font-style: italic;
-            color: #8A7A71;
-        }
-
-        /* СЛАЙД 4: ФОТОАРКА Пара */
-        .arch-container {
-            width: 85%;
-            height: 310px;
-            margin: 15px auto;
-            border-radius: 200px 200px 0 0;
-            border: 1px solid var(--gold-accent);
-            padding: 5px;
-        }
-        .arch-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 195px 195px 0 0;
-            background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600'); /* Замените на реальное фото пары */
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* СЛАЙД 5: ТАЙМЛАЙН */
-        .timeline-container {
-            margin: 15px 0 10px 10px;
-            position: relative;
-            text-align: left;
-            width: 90%;
-        }
-        .timeline-line {
-            position: absolute;
-            left: 57px;
-            top: 5px;
-            bottom: 5px;
-            width: 1px;
-            background-color: var(--gold-accent);
-            opacity: 0.6;
-        }
-        .timeline-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-            position: relative;
-        }
-        .tl-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--gold-accent);
-            margin-right: 15px;
-            z-index: 2;
-        }
-        .tl-time {
-            font-family: 'Playfair Display', serif;
-            font-size: 15px;
-            font-weight: 500;
+        .divider-line {
             width: 50px;
-        }
-        .tl-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--gold-accent);
-            border-radius: 50%;
-            position: absolute;
-            left: 54px;
-            z-index: 3;
-        }
-        .tl-desc {
-            padding-left: 25px;
-            font-size: 14px;
+            height: 1px;
+            background-color: #b38b46;
+            margin: 20px auto 0 auto;
         }
 
-        /* СЛАЙД 6: ДРЕСС-КОД */
-        .palette-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-            width: 100%;
+        /* Премиальная Web-форма RSVP */
+        .rsvp-section {
+            background-color: #f5eee6;
+            padding: 45px 25px;
+            text-align: center;
         }
-        .palette-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            text-transform: uppercase;
+        .rsvp-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #333;
             letter-spacing: 1px;
-            color: #7A6B61;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
-        .color-bubble {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            margin-bottom: 5px;
-            box-shadow: inset 0 0 4px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.04);
-        }
-        .avoid-text {
-            font-size: 12px;
+        .rsvp-subtitle {
+            font-family: 'Lora', serif;
             font-style: italic;
-            color: #A63A3A;
-            margin-top: 10px;
-        }
-
-        /* СЛАЙД 7: ЛОКАЦИЯ */
-        .restaurant-title { font-size: 16px; font-weight: 500; margin-top: 5px; }
-        .restaurant-address { font-size: 14px; color: #6B5B51; margin-bottom: 10px; }
-        .sketch-container {
-            width: 100%;
-            height: 100px;
-            margin: 5px 0;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M20,80 L180,80 M40,80 L40,50 L90,35 L140,50 L140,80 M40,55 L140,55 M90,35 L90,80 M55,62 L75,62 L75,80 L55,80 Z M105,62 L125,62 L125,80 L105,80 Z M10,85 C50,82 150,82 190,85" stroke="%233D2B1F" stroke-width="0.7" fill="none" opacity="0.4"/><path d="M25,80 C20,70 30,60 35,50 C32,65 20,75 25,80 Z M170,80 C165,65 175,55 180,45 C178,60 165,75 170,80 Z" stroke="%233D2B1F" stroke-width="0.5" fill="none" opacity="0.2"/></svg>');
-        }
-        .map-box {
-            width: 100%;
-            height: 170px;
-            border: 1px solid var(--border-color);
-            margin-top: 10px;
-        }
-
-        /* СЛАЙД 8: ДЕТАЛИ */
-        .wine-sketch {
-            width: 80px;
-            height: 80px;
-            margin: 15px auto 0 auto;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M75,30 L81,30 L81,35 L75,37 Z M78,35 L78,110 M72,55 C72,45 84,45 84,55 L84,110 L72,110 Z M45,85 L45,110 M38,70 C38,60 52,60 52,70 L49,85 L41,85 Z M62,85 L62,110 M55,72 C55,64 69,64 69,72 L66,85 L58,85 Z M30,110 L95,110" stroke="%233D2B1F" stroke-width="0.8" fill="none" opacity="0.5"/></svg>');
-        }
-
-        /* СЛАЙД 9: RSVP ФОРМА */
-        .rsvp-deadline { font-size: 13px; color: #7A6B61; margin-bottom: 15px; }
-        form { text-align: left; width: 100%; }
-        .form-group { margin-bottom: 12px; }
-        form label {
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            font-weight: 600;
-            color: #5A4B41;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #D1C9BC;
-            background-color: #FCFAF7;
-            color: var(--text-main);
-            font-family: 'Lora', serif;
-            font-size: 14px;
-        }
-        .radio-box-group { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-        .interactive-label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
-        input[type="radio"], input[type="checkbox"] { accent-color: var(--text-main); width: 16px; height: 16px; }
-        
-        .hidden-partner-block { max-height: 0; overflow: hidden; opacity: 0; transition: all 0.3s ease; }
-        .hidden-partner-block.revealed { max-height: 80px; opacity: 1; margin-top: 10px; }
-        
-        .submit-button {
-            background-color: var(--text-main);
-            color: #ffffff;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            font-family: 'Lora', serif;
             font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            margin-top: 5px;
+            color: #777;
+            margin-bottom: 30px;
         }
-        .status-msg { padding: 10px; margin-top: 10px; font-size: 14px; display: none; text-align: center; }
-        .status-msg.win { color: var(--gold-accent); font-weight: bold; }
-
-        /* ИНТЕРФЕЙС НАВИГАЦИИ (Внизу экрана) */
-        .nav-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .form-group {
+            margin-bottom: 22px;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-text {
             width: 100%;
-            height: 65px;
-            background: linear-gradient(to top, var(--bg-creamy) 70%, rgba(247, 244, 238, 0));
+            padding: 14px;
+            border: 1px solid #dcd6cd;
+            background-color: #ffffff;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s;
+        }
+        .input-text:focus {
+            outline: none;
+            border-color: #b38b46;
+        }
+
+        /* Плитки выбора (Да/Нет) */
+        .radio-tile-group {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 100;
-            border-top: 1px solid rgba(197, 160, 89, 0.08);
+            gap: 12px;
         }
-        .nav-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-family: 'Lora', serif;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        .radio-container {
+            flex: 1;
+            position: relative;
+        }
+        .radio-container input {
+            position: absolute;
+            opacity: 0;
             cursor: pointer;
-            padding: 10px;
-            transition: opacity 0.2s;
+            height: 0;
+            width: 0;
         }
-        .nav-btn:disabled { opacity: 0.2; cursor: default; }
-        
-        /* Индикаторные точки прогресса */
-        .nav-dots { display: flex; gap: 6px; }
-        .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #D1C9BC;
-            border-radius: 50%;
+        .radio-label {
+            display: block;
+            text-align: center;
+            background-color: #ffffff;
+            border: 1px solid #dcd6cd;
+            padding: 14px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
-        .dot.active {
-            background-color: var(--gold-accent);
-            transform: scale(1.3);
+        .radio-container input:checked ~ .radio-label {
+            background-color: #704e36;
+            border-color: #704e36;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(112, 78, 54, 0.2);
+        }
+
+        /* Современные кастомные чекбоксы для выбора напитков */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 12px 12px 12px 40px;
+            background: #ffffff;
+            border: 1px solid #eaddce;
+            border-radius: 6px;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border: 1px solid #cfa668;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: #cfa668;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Анимированная кнопка отправки формы */
+        .submit-btn {
+            width: 100%;
+            background-color: #704e36;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(112, 78, 54, 0.2);
+        }
+        .submit-btn:hover {
+            background-color: #553b28;
+            transform: translateY(-1px);
+            box-shadow: 0 7px 18px rgba(112, 78, 54, 0.3);
+        }
+        .footer-text {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            color: #704e36;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-    <svg style="display: none;">
-        <g id="icon-welcome"><path d="M12,2 C6.48,2 2,6.48,2 12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48,17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M11,7 L13,7 L13,13 L11,13 Z M11,15 L13,15 L13,17 L11,17 Z"/></g>
-        <g id="icon-rings"><path d="M9.5,17 C5.36,17 2,13.64 2,9.5 C2,5.36 5.36,2 9.5,2 C13.64,2 17,5.36 17,9.5 C17,13.64 13.64,17 9.5,17 Z M9.5,4 C6.46,4 4,6.46 4,9.5 C4,12.54 6.46,15 9.5,15 C12.54,15 15,12.54 15,9.5 C15,6.46 12.54,4 9.5,4 Z M14.5,22 C10.36,22 7,18.64 7,14.5 C7,14.22 7.02,13.94 7.05,13.67 C7.8,14.5 8.76,15.13 9.85,15.46 C9.63,16.32 9.9,17.27 10.57,17.93 C11.64,19 13.36,19 14.43,17.93 C15.5,16.86 15.5,15.14 14.43,14.07 C13.77,13.4 12.82,13.13 11.96,13.35 C11.63,12.26 11,11.3 10.17,10.55 C10.44,10.52 10.72,10.5 11,10.5 C15.14,10.5 18.5,13.86 18.5,18 C18.5,22.14 15.14,22 14.5,22 Z"/></g>
-        <g id="icon-food"><path d="M11,9 H9 V2 H7 V9 H5 V2 H3 V9 C3,11.21 4.79,13 7,13 V22 H9 V13 C11,12.91 12.69,11.21 12.69,9 H11 Z M16,22 H18 V2 H16 C13.79,2 12,3.79 12,6 V15 H16 V22 Z"/></g>
-        <g id="icon-cake"><path d="M12,2 C11.45,2 11,2.45 11,3 V5 H13 V3 C13,2.45 12.55,2 12,2 Z M4,12 V20 C4,21.1 4.9,22 6,22 H18 C19.1,22 20,21.1 20,20 V12 H4 Z M18,17 H6 V15 H18 V17 Z M21,7 H3 C2.45,7 2,7.45 2,8 V10 C2,10.55 2.45,11 3,11 H21 C21.55,11 22,10.55 22,10 V8 C22,7.45 21.55,7 21,7 Z"/></g>
-        <g id="icon-music"><path d="M12,3 L12,12.55 C11.41,12.21 10.73,12 10,12 C7.79,12 6,13.79 6,16 C6,18.21 7.79,20 10,20 C12.21,20 14,18.21 14,16 L14,6 L19,6 L19,3 L12,3 Z"/></g>
-        <g id="icon-car"><path d="M18.92,6.01 C18.72,5.42 18.16,5 17.5,5 L6.5,5 C5.84,5 5.28,5.42 5.08,6.01 L3,12 V20 C3,20.55 3.45,21 4,21 L5,21 C5.55,21 6,20.55 6,20 L6,19 L18,19 L18,20 C18,20.55 18.45,21 19,21 L20,21 C20.55,21 21,20.55 21,20 L21,12 L18.92,6.01 Z M6.5,7 H17.5 L18.83,11 H5.17 L6.5,7 Z M6.5,16 C5.67,16 5,15.33 5,14.5 C5,13.67 5.67,13 6.5,13 C7.33,13 8,13.67 8,14.5 C8,15.33 7.33,16 6.5,16 Z M17.5,16 C16.67,16 16,15.33 16,14.5 C16,13.67 16.67,13 17.5,13 C18.33,13 19,13.67 19,14.5 C19,15.33 18.33,16 17.5,16 Z"/></g>
-        <g id="icon-heart"><path d="M12,21.35 L10.55,20.03 C5.4,15.36 2,12.28 2,8.5 C2,5.42 4.42,3 7.5,3 C9.24,3 10.91,3.81 12,5.09 C13.09,3.81 14.76,3 16.5,3 C19.58,3 22,5.42 22,8.5 C22,12.28 18.6,15.36 13.45,20.03 L12,21.35 Z"/></g>
-    </svg>
+    <nav class="floating-nav">
+        <a href="#home">Головна</a>
+        <a href="#story">Історія</a>
+        <a href="#details">Деталі</a>
+        <a href="#rsvp">Анкета</a>
+    </nav>
 
-    <div class="wrapper" id="main-presentation-wrapper">
-        <div class="silk-decor silk-top-left"></div>
-        <div class="silk-decor silk-top-right"></div>
-
-        <div class="slide active" id="slide-1">
-            <div class="hero-border">
-                <p class="hero-label">Запрошення на весілля</p>
-                <h1 class="main-names">Дар'я<span class="ampersand">&</span>Антон</h1>
-                <p class="wedding-date">01 | 08 | 2026</p>
-                <button type="button" class="start-presentation-btn" id="btn-start">Запрошення</button>
+    <div class="phone-wrapper">
+        
+        <section id="home" class="page-section animate-fade">
+            <img src="1112.jpg" alt="Обкладинка" class="slide-img">
+        </section>
+        
+        <section id="story" class="page-section">
+            <img src="1110.jpg" alt="Наша історія" class="slide-img">
+            <img src="1113.jpg" alt="Фото пари" class="slide-img">
+            
+            <div class="timer-container">
+                <p class="timer-title">До нашого свята залишилось:</p>
+                <div class="countdown-grid" id="countdown">
+                    <div class="time-block"><span id="days">00</span><label>днів</label></div>
+                    <div class="time-block"><span id="hours">00</span><label>годин</label></div>
+                    <div class="time-block"><span id="minutes">00</span><label>хвилин</label></div>
+                </div>
             </div>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-2">
-            <p class="hero-label">Шановні</p>
-            <h1 id="web-guest-name" class="dynamic-guest-name">Любі гості</h1>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
+        </section>
+        
+        <section id="greeting" class="page-section">
+            <div class="dynamic-greeting-slide">
+                <div class="greeting-prefix">Шановний(а)</div>
+                <div class="guest-name" id="guest-name">Дорогий Гість</div>
+                <div class="greeting-text">
+                    запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя — нашого весілля!
+                </div>
+                <div class="divider-line"></div>
             </div>
-            <p class="greeting-text">Запрошуємо вас розділити з нами найтепліші емоції та стати частиною одного з найважливіших днів нашого життя.</p>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-3">
-            <div class="branch-decor" style="margin-bottom: 25px; transform: rotate(180deg);"></div>
-            <p class="quote-main-text">У кожної історії кохання є своя особлива глава. Наша починається саме тут.</p>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="quote-sub-text">Дякуємо, що будете поруч із нами у цей особливий день! Це буде незабутньо ♡</p>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-4">
-            <div class="arch-container">
-                <div class="arch-image"></div>
-            </div>
-            <div class="heart-divider" style="margin: 10px auto;">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="quote-sub-text" style="color: var(--text-main); font-weight: 500;">І серед мільйонів людей ми знайшли одне одного.</p>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-5">
-            <h2>Timeline</h2>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-
-            <div class="timeline-container">
-                <div class="timeline-line"></div>
+        </section>
+        
+        <section id="details" class="page-section">
+            <img src="1109.jpg" alt="Локація весілля" class="slide-img">
+            <img src="1114.jpg" alt="Дрес-код та Таймлайн" class="slide-img">
+            <img src="1115.jpg" alt="Побажання щодо подарунків" class="slide-img">
+        </section>
+        
+        <section id="rsvp" class="page-section">
+            <div class="rsvp-section">
+                <div class="rsvp-title">Підтвердження присутності</div>
+                <div class="rsvp-subtitle">Будь ласка, дайте відповідь до 01.07.2026</div>
                 
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-welcome"/></svg>
-                    <div class="tl-time">14:00</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">Welcome zone</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-rings"/></svg>
-                    <div class="tl-time">14:30</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">Церемонія</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-food"/></svg>
-                    <div class="tl-time">15:30</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">1 стіл</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-food"/></svg>
-                    <div class="tl-time">17:30</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">2 стіл</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-cake"/></svg>
-                    <div class="tl-time">18:30</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">Торт</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-music"/></svg>
-                    <div class="tl-time">19:00</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">Пати тайм</div>
-                </div>
-                <div class="timeline-row">
-                    <svg class="tl-icon"><use href="#icon-car"/></svg>
-                    <div class="tl-time">20:00</div>
-                    <div class="tl-dot"></div>
-                    <div class="tl-desc">Трансфер</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide" id="slide-6">
-            <h2>Dress Code</h2>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="greeting-text">Будемо вдячні, якщо ви підтримаєте кольорову гаму нашого свята у ніжних та природних відтінках:</p>
-            
-            <div class="palette-grid">
-                <div class="palette-item"><div class="color-bubble" style="background-color: #E8D3C7;"></div>pink</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #E2CEB1;"></div>champ.</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #C5A059;"></div>gold</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #A3B19B;"></div>sage</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #4A3E3D;"></div>brown</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #7B8CA3;"></div>blue</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #A69BB1;"></div>lilac</div>
-                <div class="palette-item"><div class="color-bubble" style="background-color: #212121;"></div>black</div>
-            </div>
-            <p class="avoid-text">Просимо уникати: total white • neon • bright red</p>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-7">
-            <h2>Локація</h2>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="restaurant-title">Ресторанний комплекс</p>
-            <p class="restaurant-address">с. Сурсько-Литовське, вул. Шевченка, 45</p>
-            
-            <div class="sketch-container"></div>
-            <div class="map-box">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2650.052843813897!2d34.9351052!3d48.3370353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dba43f77df34a5%3A0x6b4fb6c177fa2b63!2z0YPQuy4g0KjQtdCy0YfQtdC90LrQviwgNDUsINCh0YPRgNGB0LrQvi3Qm9C40YLQvtCy0YHQutC_0NC1LCD0L3QtdC_0YDQvtC_0LXRgtGA0L7QstGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCDQo9C60YDQsNC40L3QsCwgNDkwMDA!5e0!3m2!1sru!2sde!4v1710000000000!5m2!1sru!2sde" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-
-        <div class="slide" id="slide-8">
-            <h2>Замість квітів</h2>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="greeting-text">Будемо раді пляшці улюбленого напою з кількома теплими словами для нас.</p>
-            <p class="greeting-text" style="margin-top: 10px;">Нехай вона стане частиною нашої особливої колекції спогадів.</p>
-            
-            <div class="wine-sketch"></div>
-            <div class="branch-decor"></div>
-        </div>
-
-        <div class="slide" id="slide-9">
-            <h2>RSVP Підтвердження</h2>
-            <div class="heart-divider">
-                <svg class="heart-divider-icon"><use href="#icon-heart"/></svg>
-            </div>
-            <p class="rsvp-deadline">Будь ласка, дайте відповідь до 01.07.2026</p>
-            
-            <form id="rsvp-wedding-form" action="https://formspree.io/f/mbdbqron" method="POST">
-                <div class="form-group">
-                    <label for="input-name">Ваше ім'я та прізвище</label>
-                    <input type="text" id="input-name" name="Имя_Гостя" required placeholder="Марія Ковальчук">
-                </div>
-
-                <div class="form-group">
-                    <label>Чи будете ви з нами?</label>
-                    <div class="radio-box-group">
-                        <label class="interactive-label">
-                            <input type="radio" name="Присутствие" value="Приду" checked required>
-                            <span>З задоволенням прийду</span>
-                        </label>
-                        <label class="interactive-label">
-                            <input type="radio" name="Присутствие" value="На жаль, не зможу">
-                            <span>На жаль, не зможу</span>
-                        </label>
+                <form action="https://formspree.io/f/mbdbqron" method="POST">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="name-field">Ваше ім'я / імена:</label>
+                        <input type="text" name="Имя гостя" id="name-field" class="input-text" required placeholder="Введіть ваше ім'я">
                     </div>
-                </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Чи зможете ви бути присутніми?</label>
+                        <div class="radio-tile-group">
+                            <div class="radio-container">
+                                <input type="radio" name="Присутствие" value="Да, с удовольствием" id="rsvp-yes" checked required>
+                                <label for="rsvp-yes" class="radio-label">Так, з радістю!</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" name="Присутствие" value="Нет, не смогу" id="rsvp-no">
+                                <label for="rsvp-no" class="radio-label">На жаль, не зможу</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Ваші уподобання в напоях:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-container">Вино червоне
+                                <input type="checkbox" name="Напитки[]" value="Вино красное">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Вино біле
+                                <input type="checkbox" name="Напитки[]" value="Вино белое">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Ігристе (Шампанське)
+                                <input type="checkbox" name="Напитки[]" value="Игристое">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Міцні напої (Віскі/Коньяк/Горілка)
+                                <input type="checkbox" name="Напитки[]" value="Крепкие напитки">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Безалкогольні напої
+                                <input type="checkbox" name="Напитки[]" value="Безалкогольные">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Надіслати відповідь</button>
+                    
+                    <div class="footer-text">Чекаємо на вас! ♡</div>
+                </form>
+            </div>
+        </section>
 
-                <div class="form-group" id="plus-one-checkbox-zone">
-                    <label class="interactive-label">
-                        <input type="checkbox" id="checkbox-plus-one" name="Идет_с_парой" value="Да">
-                        <span style="font-weight: 600; font-size: 13px;">Я буду з парою (+1)</span>
-                    </label>
-                </div>
-
-                <div class="form-group hidden-partner-block" id="partner-input-zone">
-                    <label for="input-partner">Ім'я вашої пари</label>
-                    <input type="text" id="input-partner" name="Имя_Спутника" placeholder="Ім'я та прізвище">
-                </div>
-
-                <div class="form-group">
-                    <label for="select-drinks">Переваги в напоях</label>
-                    <select id="select-drinks" name="Предпочтения_Алкоголь">
-                        <option value="Вино червоне">Вино червоне</option>
-                        <option value="Вино біле">Вино біле</option>
-                        <option value="Ігристе">Ігристе</option>
-                        <option value="Міцні напої">Міцні напої</option>
-                        <option value="Безалкогольні">Безалкогольні</option>
-                    </select>
-                </div>
-
-                <button type="submit" id="submit-btn" class="submit-button">Надіслати відповідь</button>
-            </form>
-
-            <div id="msg-success" class="status-msg win">Дякуємо! Вашу відповідь збережено. ♥</div>
-            <div id="msg-error" class="status-msg" style="color: #A63A3A;">Помилка. Спробуйте ще раз.</div>
-        </div>
-
-        <div class="nav-controls" id="custom-nav-bar" style="display: none;">
-            <button type="button" class="nav-btn" id="nav-prev-btn">← Назад</button>
-            <div class="nav-dots" id="nav-dots-container"></div>
-            <button type="button" class="nav-btn" id="nav-next-btn">Далі →</button>
-        </div>
     </div>
 
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.slide');
-            const totalSlides = slides.length;
-            let currentIdx = 0;
+        /* 1. Скрипт разбора URL и подстановки имени (?name=Имя) */
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('name');
+        
+        if (guestName) {
+            // Убираем плюсы, если они пришли вместо пробелов
+            const formattedName = guestName.replace(/\+/g, ' ');
+            // Меняем текст приветствия
+            document.getElementById('guest-name').innerText = formattedName;
+            // Автоматически заполняем поле в анкете для удобства гостя
+            document.getElementById('name-field').value = formattedName;
+        } else {
+            document.getElementById('guest-name').innerText = "Дорогі гості";
+        }
 
-            const navBar = document.getElementById('custom-nav-bar');
-            const prevBtn = document.getElementById('nav-prev-btn');
-            const nextBtn = document.getElementById('nav-next-btn');
-            const dotsContainer = document.getElementById('nav-dots-container');
-            const startBtn = document.getElementById('btn-start');
-            const wrapper = document.getElementById('main-presentation-wrapper');
+        /* 2. Скрипт живого таймера обратного отсчета (Дата свадьбы: 1 августа 2026) */
+        const targetDate = new Date("Aug 1, 2026 14:00:00").getTime();
 
-            // 1. Инициализация точек навигации (начиная со 2-го слайда)
-            for (let i = 1; i < totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 1) dot.classList.add('active');
-                dotsContainer.appendChild(dot);
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("days").innerText = d > 0 ? d : 0;
+            document.getElementById("hours").innerText = h > 0 ? h : 0;
+            document.getElementById("minutes").innerText = m > 0 ? m : 0;
+
+            if (difference < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown").innerHTML = "<p style='font-family: Lora, serif; font-style: italic; color: #704e36;'>Цей особливий день настав!</p>";
             }
-
-            function updatePresentation() {
-                slides.forEach((slide, idx) => {
-                    if (idx === currentIdx) {
-                        slide.classList.add('active');
-                        // Скроллим слайд вверх при переключении
-                        slide.scrollTop = 0;
-                    } else {
-                        slide.classList.remove('active');
-                    }
-                });
-
-                // Показываем/скрываем панель управления
-                if (currentIdx === 0) {
-                    navBar.style.display = 'none';
-                } else {
-                    navBar.style.display = 'flex';
-                    
-                    // Обновляем состояние кнопок
-                    prevBtn.disabled = (currentIdx === 1);
-                    nextBtn.disabled = (currentIdx === totalSlides - 1);
-
-                    // Обновляем точки
-                    const dots = dotsContainer.querySelectorAll('.dot');
-                    dots.forEach((dot, index) => {
-                        if (index === (currentIdx - 1)) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
-            }
-
-            function nextSlide() {
-                if (currentIdx < totalSlides - 1) {
-                    currentIdx++;
-                    updatePresentation();
-                }
-            }
-
-            function prevSlide() {
-                if (currentIdx > 1) {
-                    currentIdx--;
-                    updatePresentation();
-                }
-            }
-
-            // Нажатие на кнопку "Запрошення" открывает презентацию
-            startBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                nextSlide();
-            });
-
-            // Нажатие на стрелочки внизу
-            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
-            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
-
-            // Умное перелистывание по нажатию на сам слайд (исключая формы, карты и интерактивные зоны)
-            wrapper.addEventListener('click', (e) => {
-                if (currentIdx === 0) return; // На первом экране кликаем только по кнопке
-                
-                // Если кликнули на кнопку, инпут, карту, селект или лейбл — не перелистываем слайд
-                if (e.target.closest('input, select, button, iframe, label, .palette-grid, .nav-controls')) {
-                    return;
-                }
-                
-                // Клик по правой части экрана — вперед, по левой — назад
-                const screenWidth = wrapper.offsetWidth;
-                const clickX = e.clientX - wrapper.getBoundingClientRect().left;
-
-                if (clickX > screenWidth * 0.35) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
-            });
-
-            // 2. Персонализация имени из ссылки URL
-            const params = new URLSearchParams(window.location.search);
-            const rawName = params.get('name');
-            const titleElement = document.getElementById('web-guest-name');
-            const inputElement = document.getElementById('input-name');
-
-            if (rawName) {
-                const cleanName = rawName.replace(/\+/g, ' ');
-                titleElement.innerText = cleanName; 
-                inputElement.value = cleanName;     
-            }
-
-            // 3. Логика формы RSVP (+1 спутник)
-            const plusOneCheck = document.getElementById('checkbox-plus-one');
-            const partnerZone = document.getElementById('partner-input-zone');
-            const partnerInput = document.getElementById('input-partner');
-            const attendanceRadios = document.querySelectorAll('input[name="Присутствие"]');
-            const plusOneToggleZone = document.getElementById('plus-one-checkbox-zone');
-
-            plusOneCheck.addEventListener('change', function() {
-                if (this.checked) {
-                    partnerZone.classList.add('revealed');
-                    partnerInput.setAttribute('required', 'required');
-                } else {
-                    partnerZone.classList.remove('revealed');
-                    partnerInput.removeAttribute('required');
-                    partnerInput.value = '';
-                }
-            });
-
-            attendanceRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'На жаль, не зможу') {
-                        plusOneToggleZone.style.display = 'none';
-                        plusOneCheck.checked = false;
-                        partnerZone.classList.remove('revealed');
-                        partnerInput.removeAttribute('required');
-                        partnerInput.value = '';
-                    } else {
-                        plusOneToggleZone.style.display = 'block';
-                    }
-                });
-            });
-
-            // 4. Бесшовная отправка формы AJAX в Formspree
-            const form = document.getElementById('rsvp-wedding-form');
-            const btn = document.getElementById('submit-btn');
-            const successMsg = document.getElementById('msg-success');
-            const errorMsg = document.getElementById('msg-error');
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault(); 
-                btn.innerText = "Надсилання...";
-                btn.disabled = true;
-
-                fetch(form.action, {
-                    method: form.method,
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        form.style.display = 'none'; 
-                        document.querySelector('.rsvp-deadline').style.display = 'none';
-                        successMsg.style.display = 'block'; 
-                    } else {
-                        throw new Error();
-                    }
-                })
-                .catch(() => {
-                    errorMsg.style.display = 'block';
-                    btn.innerText = "Надіслати відповідь";
-                    btn.disabled = false;
-                });
-            });
-        });
+        }, 1000);
     </script>
 </body>
 </html>
